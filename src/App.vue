@@ -1,28 +1,66 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrap">
+    <compHeader></compHeader>
+    <div class="container">
+      <div>
+        {{ userName }}
+      </div>
+      <div v-user-lastname="userLastName"></div>
+      <div v-awesome.red.big="textToRender"></div>
+      <div v-awesome.blue.small="textToRender"></div>
+    </div>
+    <compFooter></compFooter>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import compHeader from "./components/header_footer/header";
+import compFooter from "./components/header_footer/footer";
 export default {
-  name: 'App',
+  data() {
+    return {
+      userName: "Alex",
+      textToRender: "text as value",
+      userLastName: "Jones",
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.userName = "Jhon";
+    }, 2000);
+  },
+  directives: {
+    "user-Lastname": {
+      bind(el, binding, vnode) {
+        el.innerHTML = binding.value;
+        console.log(vnode);
+      },
+    },
+  },
+
   components: {
-    HelloWorld
-  }
-}
+    compHeader,
+    compFooter,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 80vh;
+}
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: sans-serif;
 }
 </style>
